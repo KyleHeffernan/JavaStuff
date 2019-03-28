@@ -109,7 +109,7 @@ public class GuessingGame extends JFrame implements ActionListener
 			randomNum = rando.nextInt(100);
 			generated = true;
 			
-			System.out.println(randomNum);
+			//System.out.println(randomNum);
 		}
 		
 		//if text is entered or if checkButton is pressed
