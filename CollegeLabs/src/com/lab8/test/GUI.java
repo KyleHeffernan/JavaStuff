@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 
 public class GUI extends JFrame implements ActionListener
 {
-	//Initializing UI components
+	//Declaring UI components and attributes
 	private JButton saveButton;
 	private JButton showButton;
 	private JButton deleteButton;
