@@ -1,5 +1,5 @@
 /***********************************************
- * Control:
+ * DataAlgorithm:
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -8,15 +8,16 @@
 
 package com.assignment.test;
 
-public class Control
+public class DataAlgorithm
 {
-
-	public static void main(String[] args) 
+	//attributes
+	private String test;
+	
+	//constructor
+	public DataAlgorithm(String test)
 	{
-		HomeGUI myHomeGUI = new HomeGUI();
-
-		//Patient kyle = new Patient("hot", "yes", "yes");
-		//System.out.println(kyle);
+		this.test = test;
 	}
+	
 
 }

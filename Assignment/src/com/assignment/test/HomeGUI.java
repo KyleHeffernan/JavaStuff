@@ -14,18 +14,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 
 public class HomeGUI extends JFrame implements ActionListener
 {
@@ -53,6 +48,8 @@ public class HomeGUI extends JFrame implements ActionListener
 	private ButtonGroup throatGroup;
 	private JRadioButton throatYes;
 	private JRadioButton throatNo;
+	
+	//private ArrayList<Patient> patients = new ArrayList<Patient>();
 	
 	//constructor
 	public HomeGUI()
@@ -154,6 +151,7 @@ public class HomeGUI extends JFrame implements ActionListener
 		setSize(400,500);
 		setVisible(true);
 		
+	
 	}
 	
 	
@@ -162,7 +160,48 @@ public class HomeGUI extends JFrame implements ActionListener
 	{
 		if(anything.getSource() == submitButton)
 		{
-			System.out.println("Teste");
+			Patient Kyle = new Patient("Not set", "Not set", "Not set");
+			if(tempGroup.getSelection().equals(tempHot.getModel()))
+			{
+				System.out.println("hot");
+				Kyle.setTemperature("hot");
+			}
+			else if(tempGroup.getSelection().equals(tempNormal.getModel()))
+			{
+				System.out.println("normal");
+				Kyle.setTemperature("normal");
+			}
+			else if(tempGroup.getSelection().equals(tempCool.getModel()))
+			{
+				System.out.println("cool");
+				Kyle.setTemperature("cool");
+			}
+			
+			
+			if(achesGroup.getSelection().equals(achesYes.getModel()))
+			{
+				System.out.println("aching");
+				Kyle.setAches("yes");
+			}
+			else if(achesGroup.getSelection().equals(achesNo.getModel()))
+			{
+				System.out.println("no aching");
+				Kyle.setAches("no");
+			}
+			
+			
+			if(throatGroup.getSelection().equals(throatYes.getModel()))
+			{
+				System.out.println("sore throat");
+				Kyle.setThroat("yes");
+			}
+			else if(throatGroup.getSelection().equals(throatNo.getModel()))
+			{
+				System.out.println("no sore throat");
+				Kyle.setThroat("no");
+			}
+			System.out.println(Kyle);
+			
 		}
 	}
 }
