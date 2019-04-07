@@ -8,6 +8,7 @@
 
 package com.assignment.test;
 
+
 public class Control
 {
 
@@ -15,8 +16,8 @@ public class Control
 	{
 		HomeGUI myHomeGUI = new HomeGUI();
 
-		//Patient kyle = new Patient("hot", "yes", "yes");
-		//System.out.println(kyle);
+		DataAlgorithm myDataAlgorithm = new DataAlgorithm("test");
+		myDataAlgorithm.testData();
 	}
 
 }

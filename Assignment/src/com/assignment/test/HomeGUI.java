@@ -160,7 +160,7 @@ public class HomeGUI extends JFrame implements ActionListener
 	{
 		if(anything.getSource() == submitButton)
 		{
-			Patient Kyle = new Patient("Not set", "Not set", "Not set");
+			Patient Kyle = new Patient("Not set", "Not set", "Not set", "Not set");
 			if(tempGroup.getSelection().equals(tempHot.getModel()))
 			{
 				System.out.println("hot");

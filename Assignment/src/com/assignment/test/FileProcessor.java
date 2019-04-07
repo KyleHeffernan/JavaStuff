@@ -10,6 +10,7 @@ package com.assignment.test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -20,6 +21,7 @@ public class FileProcessor
 	private Scanner fileScanner;
 	private File text;
 	private PrintWriter writing;
+	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
 	//constructor
 	public FileProcessor(String fileName)
@@ -34,30 +36,27 @@ public class FileProcessor
 	}
 	
 	//reads through the file line by line
-	String[] readFile()
+	public ArrayList<Patient> readFile()
 	{
-		String[] validRoles = new String[5];
 		try
 		{
-			int i = 0;
 			setFileScanner(new Scanner(getText()));
 			while(getFileScanner().hasNextLine())
 			{
-				validRoles[i] = getFileScanner().nextLine();
-				i++;
+				String line = getFileScanner().nextLine();
+				String[] words = line.split(",");
+				patientList.add(new Patient(words[0], words[1], words[2], words[3]));
 			}
 		}
 		catch (FileNotFoundException e)
 		{
 			System.out.println("Run time error: " + e.getMessage());
 		}
-		
-		return validRoles;
-		
+		return patientList;
 	}
 	
 	
-	void fileWriting()
+	public void fileWriting()
 	{
 		try
 		{
@@ -70,7 +69,7 @@ public class FileProcessor
 		}
 	}
 	
-	void writeLine(String line)
+	public void writeLine(String line)
 	{
 		getWriting().println(line);
 	}

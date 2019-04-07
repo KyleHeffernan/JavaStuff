@@ -14,21 +14,23 @@ public class Patient
 	private String temperature;
 	private String aches;
 	private String throat;
+	private String tonsillitis;
 	
 	
 	//constructor
-	public Patient(String temperature, String aches, String throat)
+	public Patient(String temperature, String aches, String throat, String tonsillitis)
 	{
 		this.setTemperature(temperature);
 		this.setAches(aches);
 		this.setThroat(throat);
+		this.setTonsillitis(tonsillitis);
 	}
 	
 	
 	//toString method to return a nice looking print statement
 	public String toString()
 	{
-		String summary = ("\nTemperature: " +this.getTemperature() + "\nAches: " +this.getAches() + "\nSore throat: " +this.getThroat());
+		String summary = ("\nTemperature: " +this.getTemperature() + "\nAches: " +this.getAches() + "\nSore throat: " +this.getThroat() + "\nTonsillitis: " +this.getTonsillitis());
 		
 		return summary;
 	}
@@ -62,6 +64,16 @@ public class Patient
 
 	public void setThroat(String throat) {
 		this.throat = throat;
+	}
+
+
+	public String getTonsillitis() {
+		return tonsillitis;
+	}
+
+
+	public void setTonsillitis(String tonsillitis) {
+		this.tonsillitis = tonsillitis;
 	}
 
 }
