@@ -9,7 +9,6 @@
 package com.assignment.test;
 
 //importing GUI modules
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -50,6 +50,10 @@ public class HomeGUI extends JFrame implements ActionListener
 	private JRadioButton throatYes;
 	private JRadioButton throatNo;
 	
+	Patient currentPatient;
+	String results;
+	
+	
 	
 	//constructor
 	public HomeGUI()
@@ -63,31 +67,26 @@ public class HomeGUI extends JFrame implements ActionListener
 		
 		//creating titlePanel
 		titlePanel = new JPanel();
-		titlePanel.setBackground(Color.pink);
 		titlePanel.setPreferredSize(new Dimension(300,50));
 		add(titlePanel);
 		
 		//creating inputPanel1
 		inputPanel1 = new JPanel();
-		inputPanel1.setBackground(Color.green);
 		inputPanel1.setPreferredSize(new Dimension(300,50));
 		add(inputPanel1);
 		
 		//creating inputPanel2
 		inputPanel2 = new JPanel();
-		inputPanel2.setBackground(Color.red);
 		inputPanel2.setPreferredSize(new Dimension(300,50));
 		add(inputPanel2);
 		
 		//creating inputPanel3
 		inputPanel3 = new JPanel();
-		inputPanel3.setBackground(Color.orange);
 		inputPanel3.setPreferredSize(new Dimension(300,50));
 		add(inputPanel3);
 		
 		//creating bottomPanel
 		bottomPanel = new JPanel();
-		bottomPanel.setBackground(Color.yellow);
 		bottomPanel.setPreferredSize(new Dimension(300,50));
 		add(bottomPanel);
 		
@@ -160,50 +159,56 @@ public class HomeGUI extends JFrame implements ActionListener
 	{
 		if(anything.getSource() == submitButton)
 		{
-			Patient Kyle = new Patient("Not set", "Not set", "Not set", "Not set");
-			
-			//setting the patients temperature based on what is submitted
-			if(tempGroup.getSelection().equals(tempHot.getModel()))
+			if(  (tempHot.isSelected() == false && tempNormal.isSelected() == false && tempCool.isSelected() == false) || (achesYes.isSelected() == false && achesNo.isSelected() == false) || (throatYes.isSelected() == false && throatNo.isSelected() == false))
 			{
-				System.out.println("hot");
-				Kyle.setTemperature("hot");
+				JOptionPane.showMessageDialog(this, "Please enter values for each symptom!");
 			}
-			else if(tempGroup.getSelection().equals(tempNormal.getModel()))
+			else
 			{
-				System.out.println("normal");
-				Kyle.setTemperature("normal");
+				currentPatient = new Patient("Not set", "Not set", "Not set", "Not set");
+				
+				//setting the patients temperature based on what is submitted
+				if(tempHot.isSelected())
+				{
+					currentPatient.setTemperature("hot");
+				}
+				else if(tempNormal.isSelected())
+				{
+					currentPatient.setTemperature("normal");
+				}
+				else if(tempCool.isSelected())
+				{
+					currentPatient.setTemperature("cool");
+				}
+				
+				//setting the patients aches based on what is submitted
+				if(achesYes.isSelected())
+				{
+					currentPatient.setAches("yes");
+				}
+				else if(achesNo.isSelected())
+				{
+					currentPatient.setAches("no");
+				}
+				
+				//setting the patients throat based on what is submitted
+				if(throatYes.isSelected())
+				{
+					currentPatient.setThroat("yes");
+				}
+				else if(throatNo.isSelected())
+				{
+					currentPatient.setThroat("no");
+				}
+				
+				//System.out.println(currentPatient);
+				
+				DataAlgorithm myDataAlgorithm = new DataAlgorithm(currentPatient);
+				myDataAlgorithm.gettingTotals();
+				myDataAlgorithm.calculations();
+				results = myDataAlgorithm.returnResults();
+				JOptionPane.showMessageDialog(this, results);
 			}
-			else if(tempGroup.getSelection().equals(tempCool.getModel()))
-			{
-				System.out.println("cool");
-				Kyle.setTemperature("cool");
-			}
-			
-			//setting the patients aches based on what is submitted
-			if(achesGroup.getSelection().equals(achesYes.getModel()))
-			{
-				System.out.println("aching");
-				Kyle.setAches("yes");
-			}
-			else if(achesGroup.getSelection().equals(achesNo.getModel()))
-			{
-				System.out.println("no aching");
-				Kyle.setAches("no");
-			}
-			
-			//setting the patients throat based on what is submitted
-			if(throatGroup.getSelection().equals(throatYes.getModel()))
-			{
-				System.out.println("sore throat");
-				Kyle.setThroat("yes");
-			}
-			else if(throatGroup.getSelection().equals(throatNo.getModel()))
-			{
-				System.out.println("no sore throat");
-				Kyle.setThroat("no");
-			}
-			//testing
-			System.out.println(Kyle);
 			
 		}
 	}

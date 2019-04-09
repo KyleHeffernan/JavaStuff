@@ -15,37 +15,55 @@ public class DataAlgorithm
 	//attributes
 	ArrayList<Patient> patientList = new ArrayList<Patient>();
 	int i;
-	int totalPatients = 0;
-	int totalTS = 0;           
-	int totalNoTS = 0;       
+	float totalPatients = 0;
+	float totalTS = 0;           
+	float totalNoTS = 0;       
+
+	float tempTS;                
+	float tempNoTS;              
+	float achesTS;               
+	float achesNoTS;
+	float throatTS;
+	float throatNoTS;
 	
-	int tempTS;                
-	int tempNoTS;              
-	int achesTS;               
-	int achesNoTS;
-	int throatTS;
-	int throatNoTS;
+	float totalYes;
+	float totalNo;
+	float divNum;
+	float yesChance;
+	float noChance;
 	
+	Patient currentPatient;
+	String currentTemp;
+	String currentAches;
+	String currentThroat;
+	
+	String results;
 	
 	//constructor
-	public DataAlgorithm()
+	public DataAlgorithm(Patient currentPatient)
 	{
-		
 		//instantiating an object of FileProcessor, with the filename data.txt
 		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
 		fp.openFile();
 		patientList = fp.readFile();
 		fp.closeReadFile();
-		System.out.print(patientList);
+		
+		//setting the current patients symptoms to test
+		this.currentPatient = currentPatient;
+		currentTemp = currentPatient.getTemperature();
+		currentAches = currentPatient.getAches();
+		currentThroat = currentPatient.getThroat();
+		
 	}
 	
-	public void algorithm()
+	
+	public void gettingTotals()
 	{
 		totalPatients = patientList.size();
 		
-		for(int i = 0; i < totalPatients; i++)
+		//for loop which gets the total amount of patients that do and do not have tonsillitis
+		for(i = 0; i < totalPatients; i++)
 		{
-			System.out.println(patientList.get(i).getTonsillitis());
 			if(patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				totalTS++;
@@ -56,6 +74,59 @@ public class DataAlgorithm
 			}
 		}
 		
+		
+		for(i = 0; i < totalPatients; i++)
+		{
+			if(patientList.get(i).getTemperature().equals(currentTemp) && patientList.get(i).getTonsillitis().equals("yes"))
+			{
+				tempTS++;
+			}
+			else if(patientList.get(i).getTemperature().equals(currentTemp) && patientList.get(i).getTonsillitis().equals("no"))
+			{
+				tempNoTS++;
+			}
+			
+			
+			if(patientList.get(i).getAches().equals(currentAches) && patientList.get(i).getTonsillitis().equals("yes"))
+			{
+				achesTS++;
+			}
+			else if(patientList.get(i).getAches().equals(currentAches) && patientList.get(i).getTonsillitis().equals("no"))
+			{
+				achesNoTS++;
+			}
+			
+			
+			if(patientList.get(i).getThroat().equals(currentThroat) && patientList.get(i).getTonsillitis().equals("yes"))
+			{
+				throatTS++;
+			}
+			else if(patientList.get(i).getThroat().equals(currentThroat) && patientList.get(i).getTonsillitis().equals("no"))
+			{
+				throatNoTS++;
+			}
+			
+		}
+		
+	}
+	
+	public void calculations()
+	{
+		totalYes = (tempTS/totalTS) * (achesTS/totalTS) * (throatTS/totalTS) * (totalTS/totalPatients);
+		totalNo = (tempNoTS/totalNoTS) * (achesNoTS/totalNoTS) * (throatNoTS/totalNoTS) * (totalNoTS/totalPatients);
+		
+		divNum = totalYes + totalNo;
+		
+		yesChance = totalYes/divNum;
+		noChance = totalNo/divNum;
+	}
+	
+	public String returnResults()
+	{
+		//System.out.println("\nChance of tonsillitis: " + Math.round(100 * yesChance));
+		//System.out.println("\nChance of no tonsillitis: " + Math.round(100 * noChance));
+		results = ("\nChance of tonsillitis: " + Math.round(100 * yesChance) + "%" + "\nChance of no tonsillitis: " + Math.round(100 * noChance) + "%");
+		return results;
 	}
 	
 	
@@ -67,27 +138,6 @@ public class DataAlgorithm
 	 9 with tonsillitis (TS)
 	 9 without TS
 	 
-	 temperature hot:    5/18  1/9 who hot have TS  4/9 who hot have no TS
-	 temperature normal: 8/18  7/9 who normal have TS  1/9 who normal have no TS
-	 temperature cool:   5/18  1/9 who cool have TS, 4/9 who cool have no TS
-	 
-	 aches yes:          10/18 7/9 who ache have TS, 3/9 who aches have no TS
-	 aches no:           8/18  2/9 who don't ache have TS, 6/9 who don't ache have no TS
-	 
-	 sore throat yes:    10/18 7/9 who have sore throat have TS,  3/9 who have sore throat have no TS
-	 sore throat no:     8/18  2/9 who have no sore throat have TS  6/9 who don't have sore throat have no TS
-	 
-	 
-	 P(temperature hot and has tonsillitis) = 1/9
-	 P(aches yes and has tonsillitis) = 7/9
-	 P(sore throat yes and has tonsillitis) = 7/9
-	 P(has tonsillitis) = 9/18
- 	
- 	 P(temperature hot and no tonsillitis) = 4/9
- 	 P(aches yes and no tonsillitis) = 3/9
-	 P(sore throat yes and no tonsillitis) = 3/9
-	 P(no tonsillitis) = 9/18
-	 
 	 For an individual patient multiply the probability of each of the 3 symptoms
 	 leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis
 	 
@@ -95,19 +145,18 @@ public class DataAlgorithm
 	 not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis
 	 
 	 example: patient has temperature hot, aches yes, sore throat yes
+	 
 	 temperature hot: 1/9 TS, 4/9 no TS
-	 aches yes: 7/9 TS, 3/9 no TS
+	 aches yes: 4/9 TS, 7/9 no TS
 	 sore throat yes: 7/9 TS, 3/9 no TS
 	 
-	 Yes: (1/9) * (7/9) * (7/9) * (9/18) = 0.036
-	 No: (4/9) * (3/9) * (3/9) * (9/18) = 0.025
+	 Yes: (1/9) * (4/9) * (7/9) * (9/18) = x
+	 No: (4/9) * (7/9) * (3/9) * (9/18) = y
 	 
-	 0.036 + 0.025 = 0.061
+	 x + y = z
 	 
-	 0.036/0.061= 0.059 = 59% Probability of patient having tonsillitis
-	 0.025/0.061=0.041 = 41% Probability of patient not having tonsillitis
+	 x/z= 0.059 = 59% Probability of patient having tonsillitis
+	 y/z=0.041 = 41% Probability of patient not having tonsillitis
 	 
 	 */
-	
-
 }
