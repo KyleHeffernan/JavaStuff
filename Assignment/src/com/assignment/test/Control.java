@@ -16,8 +16,12 @@ public class Control
 	{
 		HomeGUI myHomeGUI = new HomeGUI();
 
-		DataAlgorithm myDataAlgorithm = new DataAlgorithm("test");
-		myDataAlgorithm.testData();
+		DataAlgorithm myDataAlgorithm = new DataAlgorithm();
+		myDataAlgorithm.algorithm();
+		
+		System.out.println(myDataAlgorithm.totalTS);
+		System.out.println(myDataAlgorithm.totalNoTS);
+
 	}
 
 }

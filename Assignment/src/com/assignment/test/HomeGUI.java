@@ -24,7 +24,7 @@ import javax.swing.JRadioButton;
 
 public class HomeGUI extends JFrame implements ActionListener
 {
-	//Declaring GUI components and attributes
+	//declaring GUI components and attributes
 	private JPanel titlePanel;
 	private JPanel inputPanel1;
 	private JPanel inputPanel2;
@@ -36,6 +36,7 @@ public class HomeGUI extends JFrame implements ActionListener
 	private JLabel throatLabel;
 	private JButton submitButton;
 	
+	//using button groups containing radio buttons so the user can only select one value for each symptom
 	private ButtonGroup tempGroup;
 	private JRadioButton tempHot;
 	private JRadioButton tempNormal;
@@ -49,7 +50,6 @@ public class HomeGUI extends JFrame implements ActionListener
 	private JRadioButton throatYes;
 	private JRadioButton throatNo;
 	
-	//private ArrayList<Patient> patients = new ArrayList<Patient>();
 	
 	//constructor
 	public HomeGUI()
@@ -161,6 +161,8 @@ public class HomeGUI extends JFrame implements ActionListener
 		if(anything.getSource() == submitButton)
 		{
 			Patient Kyle = new Patient("Not set", "Not set", "Not set", "Not set");
+			
+			//setting the patients temperature based on what is submitted
 			if(tempGroup.getSelection().equals(tempHot.getModel()))
 			{
 				System.out.println("hot");
@@ -177,7 +179,7 @@ public class HomeGUI extends JFrame implements ActionListener
 				Kyle.setTemperature("cool");
 			}
 			
-			
+			//setting the patients aches based on what is submitted
 			if(achesGroup.getSelection().equals(achesYes.getModel()))
 			{
 				System.out.println("aching");
@@ -189,7 +191,7 @@ public class HomeGUI extends JFrame implements ActionListener
 				Kyle.setAches("no");
 			}
 			
-			
+			//setting the patients throat based on what is submitted
 			if(throatGroup.getSelection().equals(throatYes.getModel()))
 			{
 				System.out.println("sore throat");
@@ -200,6 +202,7 @@ public class HomeGUI extends JFrame implements ActionListener
 				System.out.println("no sore throat");
 				Kyle.setThroat("no");
 			}
+			//testing
 			System.out.println(Kyle);
 			
 		}

@@ -13,17 +13,24 @@ import java.util.ArrayList;
 public class DataAlgorithm
 {
 	//attributes
-	private String test;
-	private ArrayList<Patient> patientList = new ArrayList<Patient>();
+	ArrayList<Patient> patientList = new ArrayList<Patient>();
+	int i;
+	int totalPatients = 0;
+	int totalTS = 0;           
+	int totalNoTS = 0;       
+	
+	int tempTS;                
+	int tempNoTS;              
+	int achesTS;               
+	int achesNoTS;
+	int throatTS;
+	int throatNoTS;
+	
 	
 	//constructor
-	public DataAlgorithm(String test)
+	public DataAlgorithm()
 	{
-		this.test = test;
-	}
-	
-	public void testData()
-	{
+		
 		//instantiating an object of FileProcessor, with the filename data.txt
 		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
 		fp.openFile();
@@ -32,9 +39,28 @@ public class DataAlgorithm
 		System.out.print(patientList);
 	}
 	
+	public void algorithm()
+	{
+		totalPatients = patientList.size();
+		
+		for(int i = 0; i < totalPatients; i++)
+		{
+			System.out.println(patientList.get(i).getTonsillitis());
+			if(patientList.get(i).getTonsillitis().equals("yes"))
+			{
+				totalTS++;
+			}
+			else if(patientList.get(i).getTonsillitis().equals("no"))
+			{
+				totalNoTS++;
+			}
+		}
+		
+	}
 	
 	
 	/*
+	 
 	 Algorithm to get the probability of tonsillitis based on a patients symptoms
 	 
 	 Example data: 18 patients
