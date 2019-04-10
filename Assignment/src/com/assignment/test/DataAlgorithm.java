@@ -1,5 +1,5 @@
 /***********************************************
- * DataAlgorithm:
+ * DataAlgorithm:this class gets an arraylist of Patient classes from the FileProcessor class and
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -10,34 +10,35 @@ package com.assignment.test;
 
 import java.util.ArrayList;
 
+
 public class DataAlgorithm
 {
 	//attributes
-	ArrayList<Patient> patientList = new ArrayList<Patient>();
-	int i;
-	float totalPatients = 0;
-	float totalTS = 0;           
-	float totalNoTS = 0;       
-
-	float tempTS;                
-	float tempNoTS;              
-	float achesTS;               
-	float achesNoTS;
-	float throatTS;
-	float throatNoTS;
+	private ArrayList<Patient> patientList = new ArrayList<Patient>();
+	private int i;
+	private float totalPatients = 0;
+	private float totalTS = 0;           
+	private float totalNoTS = 0;       
+    
+	private float tempTS;                
+	private float tempNoTS;              
+	private float achesTS;               
+	private float achesNoTS;
+	private float throatTS;
+	private float throatNoTS;
 	
-	float totalYes;
-	float totalNo;
-	float divNum;
-	float yesChance;
-	float noChance;
+	private float totalYes;
+	private float totalNo;
+	private float divNum;
+	private float yesChance;
+	private float noChance;
 	
 	Patient currentPatient;
-	String currentTemp;
-	String currentAches;
-	String currentThroat;
+	private String currentTemp;
+	private String currentAches;
+	private String currentThroat;
 	
-	String results;
+	private String results;
 	
 	//constructor
 	public DataAlgorithm(Patient currentPatient)
@@ -59,6 +60,7 @@ public class DataAlgorithm
 	
 	public void gettingTotals()
 	{
+		//putting the total amount of patients into an attribute
 		totalPatients = patientList.size();
 		
 		//for loop which gets the total amount of patients that do and do not have tonsillitis
@@ -74,9 +76,10 @@ public class DataAlgorithm
 			}
 		}
 		
-		
+		//for loop in which there are if statements getting how many times certain symptoms lead to tonsillitis
 		for(i = 0; i < totalPatients; i++)
 		{
+			//if else which gets the amount of times that the current temperature lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getTemperature().equals(currentTemp) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				tempTS++;
@@ -86,7 +89,7 @@ public class DataAlgorithm
 				tempNoTS++;
 			}
 			
-			
+			//if else which gets the amount of times that the current aches lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getAches().equals(currentAches) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				achesTS++;
@@ -96,7 +99,7 @@ public class DataAlgorithm
 				achesNoTS++;
 			}
 			
-			
+			//if else which gets the amount of times that the current throat lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getThroat().equals(currentThroat) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				throatTS++;
@@ -107,8 +110,8 @@ public class DataAlgorithm
 			}
 			
 		}
-		
 	}
+	
 	
 	public void calculations()
 	{
@@ -121,6 +124,7 @@ public class DataAlgorithm
 		noChance = totalNo/divNum;
 	}
 	
+	
 	public String returnResults()
 	{
 		//System.out.println("\nChance of tonsillitis: " + Math.round(100 * yesChance));
@@ -131,32 +135,33 @@ public class DataAlgorithm
 	
 	
 	/*
+	 *** Explanation of Algorithm to get the probability of tonsillitis based on a patients symptoms ***
 	 
-	 Algorithm to get the probability of tonsillitis based on a patients symptoms
+	 For an individual patient multiply the probability of each of the 3 symptoms
+	 leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis = x
 	 
+	 Then  multiply the probability of each of the 3 symptoms
+	 not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis = y
+	 
+	 Add them together to get z, then divide x by z to get chance of tonsillitis, and y by z to get chance of no tonsillitis
+	 
+	 
+	 
+	 Example: patient has temperature hot, aches yes, sore throat yes
 	 Example data: 18 patients
 	 9 with tonsillitis (TS)
 	 9 without TS
-	 
-	 For an individual patient multiply the probability of each of the 3 symptoms
-	 leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis
-	 
-	 Then  multiply the probability of each of the 3 symptoms
-	 not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis
-	 
-	 example: patient has temperature hot, aches yes, sore throat yes
 	 
 	 temperature hot: 1/9 TS, 4/9 no TS
 	 aches yes: 4/9 TS, 7/9 no TS
 	 sore throat yes: 7/9 TS, 3/9 no TS
 	 
-	 Yes: (1/9) * (4/9) * (7/9) * (9/18) = x
-	 No: (4/9) * (7/9) * (3/9) * (9/18) = y
+	 Yes: (1/9) * (4/9) * (7/9) * (9/18) = 0.01920438957
+	 No: (4/9) * (7/9) * (3/9) * (9/18) = 0.05761316872
 	 
-	 x + y = z
+	 0.01920438957 + 0.05761316872 = 0.07681755829
 	 
-	 x/z= 0.059 = 59% Probability of patient having tonsillitis
-	 y/z=0.041 = 41% Probability of patient not having tonsillitis
-	 
+	 0.01920438957 / 0.07681755829  = 0.25 (*100) = 25% Probability of patient having tonsillitis
+	 0.05761316872 / 0.07681755829  = 0.75 (*100) = 75% Probability of patient not having tonsillitis
 	 */
 }

@@ -1,5 +1,5 @@
 /***********************************************
- * Patient:
+ * Patient: This class is used to simulate a Patient with attributes for their symptoms and contains a ToString() to print an object
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
