@@ -1,5 +1,6 @@
 /***********************************************
- * DataAlgorithm:this class gets an ArrayList of Patient classes from the FileProcessor class and
+ * DataAlgorithm: This class gets an ArrayList of Patient classes from the FileProcessor class
+ * and uses the Naive Bayes algorithm to find the probability of a patient having tonsillitis
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -13,75 +14,68 @@ import java.util.ArrayList;
 
 public class DataAlgorithm
 {
-	//attributes
-	private ArrayList<Patient> patientList = new ArrayList<Patient>();
+	//Attributes
+	private int correct = 0;
+	private int wrong = 0;
+	private long newSize;
 	private float totalPatients = 0;
 	private float totalTS = 0;           
 	private float totalNoTS = 0;       
-    
 	private float tempTS;                
 	private float tempNoTS;              
 	private float achesTS;               
 	private float achesNoTS;
 	private float throatTS;
 	private float throatNoTS;
-	
 	private float totalYes;
 	private float totalNo;
 	private float divNum;
 	private float yesChance;
 	private float noChance;
-	
-	Patient currentPatient;
+	private float totalPredictions;
+	private float percentAccurate;
 	private String currentTemp;
 	private String currentAches;
 	private String currentThroat;
-	
+	private String predictionTS;
 	private String results;
-	
 	private String accuracy;
-	private long newSize;
-	private ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
+	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	private ArrayList<Patient> testPatientList = new ArrayList<Patient>();
-	int correct = 0;
-	int wrong = 0;
-	float totalPredictions;
-	float percentAccurate;
-	String predictionTS;
-	
+	Patient currentPatient;
 	
 	
 	//   *** CONSTRUCTORS ***
 	
-	//constructor used for giving the probability to a single patient
+	//Constructor used for a single patient
 	public DataAlgorithm(Patient currentPatient)
 	{
-		//instantiating an object of FileProcessor, with the filename data.txt
+		//Instantiating an object of FileProcessor, with the filename data.csv
 		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
 		fp.openFile();
 		patientList = fp.readFile();
 		fp.closeReadFile();
 		
-		//setting the current patients symptoms to test
+		//Setting the current patients symptoms to test
 		this.currentPatient = currentPatient;
 		currentTemp = currentPatient.getTemperature();
 		currentAches = currentPatient.getAches();
 		currentThroat = currentPatient.getThroat();
 	}
 	
-	//constructor used for testing the accuracy of the algorithm
+	//Constructor used for testing the accuracy of the algorithm
 	public DataAlgorithm()
 	{
-		//instantiating an object of FileProcessor, with the filename data.txt
+		//Instantiating an object of FileProcessor, with the filename data.csv
 		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
 		fp.openFile();
 		patientList = fp.readFile();
 		fp.closeReadFile();
 		
+		//Getting approximately 70% of patientList
 		newSize = Math.round((patientList.size() * .7));
 		
-
-		//puts last 30% of patients into a testPatientList, to be used to tested
+		//Puts last 30% of patientList into testPatientList to best compared against
 		for(int i = (patientList.size() - 1); i > (newSize - 1); i--)
 		{
 			testPatientList.add(patientList.get(i));
@@ -91,9 +85,10 @@ public class DataAlgorithm
 	}
 	
 	
+	//This method gets the various total values which are later used in the calculations
 	public void gettingTotals()
 	{
-		//resetting variables
+		//Resetting variables
 		totalTS = 0;
 		totalNoTS = 0;
 		tempTS = 0;
@@ -102,13 +97,13 @@ public class DataAlgorithm
 		achesNoTS = 0;
 		throatTS = 0;
 		throatNoTS = 0;
-		
-		//putting the total amount of patients into an attribute
 		totalPatients = patientList.size();
 		
-		//for loop which gets the total amount of patients that do and do not have tonsillitis
+		
+		//For loop in which there are if statements getting how many times certain symptoms lead to tonsillitis
 		for(int i = 0; i < totalPatients; i++)
 		{
+			//If else which gets the total amount of times tonsillitis is yes, and tonsillitis is no
 			if(patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				totalTS++;
@@ -117,12 +112,8 @@ public class DataAlgorithm
 			{
 				totalNoTS++;
 			}
-		}
-		
-		//for loop in which there are if statements getting how many times certain symptoms lead to tonsillitis
-		for(int i = 0; i < totalPatients; i++)
-		{
-			//if else which gets the amount of times that the current temperature lead to tonsillitis, or lead to no tonsillitis
+			
+			//If else which gets the amount of times that the current temperature lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getTemperature().equals(currentTemp) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				tempTS++;
@@ -132,7 +123,7 @@ public class DataAlgorithm
 				tempNoTS++;
 			}
 			
-			//if else which gets the amount of times that the current aches lead to tonsillitis, or lead to no tonsillitis
+			//If else which gets the amount of times that the current aches lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getAches().equals(currentAches) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				achesTS++;
@@ -142,7 +133,7 @@ public class DataAlgorithm
 				achesNoTS++;
 			}
 			
-			//if else which gets the amount of times that the current throat lead to tonsillitis, or lead to no tonsillitis
+			//If else which gets the amount of times that the current throat lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getThroat().equals(currentThroat) && patientList.get(i).getTonsillitis().equals("yes"))
 			{
 				throatTS++;
@@ -156,15 +147,17 @@ public class DataAlgorithm
 	}
 	
 	
+	//This method implements the Naive Bayes algorithm to get the overall chance of currentPatient having tonsillitis
 	public void calculations()
 	{
-		//resetting variables
+		//Resetting variables
 		totalYes = 0;
 		totalNo = 0;
 		divNum = 0;
 		yesChance = 0;
 		noChance = 0;
 		
+		//Naive Bayes algorithm
 		totalYes = (tempTS/totalTS) * (achesTS/totalTS) * (throatTS/totalTS) * (totalTS/totalPatients);
 		totalNo = (tempNoTS/totalNoTS) * (achesNoTS/totalNoTS) * (throatNoTS/totalNoTS) * (totalNoTS/totalPatients);
 		
@@ -175,6 +168,7 @@ public class DataAlgorithm
 	}
 	
 	
+	//This method returns the results of the algorithm in a readable string
 	public String returnResults()
 	{
 		results = ("\nChance of tonsillitis: " + Math.round(100 * yesChance) + "%" + "\nChance of no tonsillitis: " + Math.round(100 * noChance) + "%");
@@ -182,9 +176,13 @@ public class DataAlgorithm
 	}
 	
 	
+	/*This method uses the first 70% of patientList as training data and compares 
+	it's predictions to the patients in the last 30% to find the accuracy of the algorithm */
 	public String testData()
 	{
 		int testSize = testPatientList.size();
+		
+		//For loop which goes through each patient is testPatientList
 		for(int j = 0; j < testSize; j++)
 		{
 			currentTemp = testPatientList.get(j).getTemperature();
@@ -194,9 +192,7 @@ public class DataAlgorithm
 			gettingTotals();
 			calculations();
 			
-			System.out.println(yesChance);
-			
-			System.out.println(testPatientList.get(j).getTonsillitis());
+			//This if else gets whether the algorithm predicts that a patient with the current symptoms would have tonsillitis
 			if((yesChance * 100) > 50)
 			{
 				predictionTS = "yes";
@@ -206,28 +202,29 @@ public class DataAlgorithm
 				predictionTS = "no";
 			}
 			
+			//This if else determines whether the prediction made by the algorithm was correct
 			if(predictionTS.equals(testPatientList.get(j).getTonsillitis()))
 			{
 				correct++;
-				System.out.println("correct");
 			}
 			else
 			{
 				wrong++;
-				System.out.println("wrong");
 			}
 			
 		}
+		//Getting the accuracy of the algorithm as a percentage
 		totalPredictions = correct + wrong;
 		percentAccurate = (correct/totalPredictions) * 100;
 		
+		//Returning the accuracy to DeveloperGUI in a nice looking string
 		accuracy = ("Correct predictions: " +correct + "\nIncorrect predictions: " +wrong + "\nPercentage accurate: "+Math.round(percentAccurate) +"%");
 		return accuracy;
 	}
 	
 	
 	/*
-	 *** Explanation of Algorithm to get the probability of tonsillitis based on a patients symptoms ***
+	 *** Explanation of Algorithm ***
 	 
 	 For an individual patient multiply the probability of each of the 3 symptoms
 	 leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis = x
@@ -236,7 +233,6 @@ public class DataAlgorithm
 	 not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis = y
 	 
 	 Add them together to get z, then divide x by z to get chance of tonsillitis, and y by z to get chance of no tonsillitis
-	 
 	 
 	 
 	 Example: patient has temperature hot, aches yes, sore throat yes

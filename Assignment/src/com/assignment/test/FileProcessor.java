@@ -1,5 +1,5 @@
 /***********************************************
- * FileProcessor:
+ * FileProcessor: This class reads through a file line by line, and adds each line to a new Patient in patientList
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -16,26 +16,26 @@ import java.util.Scanner;
 
 public class FileProcessor
 {
-	//attributes
+	//Attributes
 	private String fileName;
 	private Scanner fileScanner;
 	private File text;
 	private PrintWriter writing;
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
-	//constructor
+	//Constructor
 	public FileProcessor(String fileName)
 	{
 		this.setFileName(fileName);
 	}
 	
-	//opens file
+	//Opens file
 	public void openFile()
 	{
 		setText(new File(getFileName()));
 	}
 	
-	//reads through the file line by line
+	//Reads through the file line by line
 	public ArrayList<Patient> readFile()
 	{
 		try
@@ -43,8 +43,11 @@ public class FileProcessor
 			setFileScanner(new Scanner(getText()));
 			while(getFileScanner().hasNextLine())
 			{
+				//Puts the current line into a string
 				String line = getFileScanner().nextLine();
+				//Splits the string by each comma, and puts the remaining strings into a string array
 				String[] words = line.split(",");
+				//Adds a new Patient to patientList using the elements from the string array
 				patientList.add(new Patient(words[0], words[1], words[2], words[3]));
 			}
 		}
@@ -74,13 +77,13 @@ public class FileProcessor
 		getWriting().println(line);
 	}
 	
-	//closes file
+	//Closes file
 	public void closeReadFile()
 	{
 		getFileScanner().close();
 	}
 	
-	//closes file
+	//Closes file
 	public void closeWriteFile()
 	{
 		getWriting().close();

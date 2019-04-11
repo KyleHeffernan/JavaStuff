@@ -1,5 +1,5 @@
 /***********************************************
- * PatientGUI: this class 
+ * PatientGUI: This is the GUI that lets the user create a Patient and test the probability of it having tonsillitis
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -8,7 +8,6 @@
 
 package com.assignment.test;
 
-//importing GUI modules
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,9 +21,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+
 public class PatientGUI extends JFrame implements ActionListener
 {
-	//declaring GUI components and attributes
+	//Attributes
 	private JPanel titlePanel;
 	private JPanel inputPanel1;
 	private JPanel inputPanel2;
@@ -36,80 +36,74 @@ public class PatientGUI extends JFrame implements ActionListener
 	private JLabel throatLabel;
 	private JButton submitButton;
 	private JButton menuButton;
-	
-	//using button groups containing radio buttons so the user can only select one value for each symptom
 	private ButtonGroup tempGroup;
 	private JRadioButton tempHot;
 	private JRadioButton tempNormal;
 	private JRadioButton tempCool;
-	
 	private ButtonGroup achesGroup;
 	private JRadioButton achesYes;
 	private JRadioButton achesNo;
-	
 	private ButtonGroup throatGroup;
 	private JRadioButton throatYes;
 	private JRadioButton throatNo;
-	
 	private Patient currentPatient;
 	private String results;
 	
 	
-	
-	//constructor
+	//Constructor
 	public PatientGUI()
 	{
-		//setting title
+		//Setting title
 		super("Enter Patient's symptoms");
 		
-		//setting type of layout
+		//Setting type of layout
 		setLayout(new GridLayout());
 				
 		
-		//creating titlePanel
+		//Creating titlePanel
 		titlePanel = new JPanel();
 		titlePanel.setPreferredSize(new Dimension(300,50));
 		add(titlePanel);
 		
-		//creating inputPanel1
+		//Creating inputPanel1
 		inputPanel1 = new JPanel();
 		inputPanel1.setPreferredSize(new Dimension(300,50));
 		add(inputPanel1);
 		
-		//creating inputPanel2
+		//Creating inputPanel2
 		inputPanel2 = new JPanel();
 		inputPanel2.setPreferredSize(new Dimension(300,50));
 		add(inputPanel2);
 		
-		//creating inputPanel3
+		//Creating inputPanel3
 		inputPanel3 = new JPanel();
 		inputPanel3.setPreferredSize(new Dimension(300,50));
 		add(inputPanel3);
 		
-		//creating bottomPanel
+		//Creating bottomPanel
 		bottomPanel = new JPanel();
 		bottomPanel.setPreferredSize(new Dimension(300,50));
 		add(bottomPanel);
 		
 		
-		//creating titleLabel
+		//Creating titleLabel
 		titleLabel = new JLabel("Please enter your symptoms");
 		titlePanel.add(titleLabel);
 		
-		//creating tempLabel
+		//Creating tempLabel
 		tempLabel = new JLabel("Temperature: ");
 		inputPanel1.add(tempLabel);
 		
-		//creating achesLabel
+		//Creating achesLabel
 		achesLabel = new JLabel("Aches: ");
 		inputPanel2.add(achesLabel);
 		
-		//creating throatLabel
+		//Creating throatLabel
 		throatLabel = new JLabel("Sore throat: ");
 		inputPanel3.add(throatLabel);
 		
 		
-		//creating tempButton group
+		//Creating tempButton group
 		tempGroup = new ButtonGroup();
 		tempHot = new JRadioButton("Hot");
 		tempNormal = new JRadioButton("Normal");
@@ -121,7 +115,7 @@ public class PatientGUI extends JFrame implements ActionListener
 		inputPanel1.add(tempNormal);
 		inputPanel1.add(tempCool);
 		
-		//creating achesButton group
+		//Creating achesButton group
 		achesGroup = new ButtonGroup();
 		achesYes = new JRadioButton("Yes");
 		achesNo = new JRadioButton("No");
@@ -130,7 +124,7 @@ public class PatientGUI extends JFrame implements ActionListener
 		inputPanel2.add(achesYes);
 		inputPanel2.add(achesNo);
 		
-		//creating achesButton group
+		//Creating achesButton group
 		throatGroup = new ButtonGroup();
 		throatYes = new JRadioButton("Yes");
 		throatNo = new JRadioButton("No");
@@ -140,18 +134,18 @@ public class PatientGUI extends JFrame implements ActionListener
 		inputPanel3.add(throatNo);
 		
 		
-		//creating submitButton
+		//Creating submitButton
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		bottomPanel.add(submitButton);
 		
-		//creating menuButton
+		//Creating menuButton
 		menuButton = new JButton("Main menu");
 		menuButton.addActionListener(this);
 		bottomPanel.add(menuButton);
 				
 		
-		//setting the layout and size of the frame
+		//Setting the layout and size of the frame
 		setLayout(new GridLayout(5, 1));
 		setSize(500,500);
 		setVisible(true);
@@ -159,7 +153,7 @@ public class PatientGUI extends JFrame implements ActionListener
 	}
 	
 	
-	//reactions to events
+	//Reactions to events
 	public void actionPerformed(ActionEvent anything)
 	{
 		if(anything.getSource() == submitButton)
@@ -172,7 +166,7 @@ public class PatientGUI extends JFrame implements ActionListener
 			{
 				currentPatient = new Patient("Not set", "Not set", "Not set", "Not set");
 				
-				//setting the patients temperature based on what is submitted
+				//Setting the patients temperature based on what is submitted
 				if(tempHot.isSelected())
 				{
 					currentPatient.setTemperature("hot");
@@ -186,7 +180,7 @@ public class PatientGUI extends JFrame implements ActionListener
 					currentPatient.setTemperature("cool");
 				}
 				
-				//setting the patients aches based on what is submitted
+				//Setting the patients aches based on what is submitted
 				if(achesYes.isSelected())
 				{
 					currentPatient.setAches("yes");
@@ -196,7 +190,7 @@ public class PatientGUI extends JFrame implements ActionListener
 					currentPatient.setAches("no");
 				}
 				
-				//setting the patients throat based on what is submitted
+				//Setting the patients throat based on what is submitted
 				if(throatYes.isSelected())
 				{
 					currentPatient.setThroat("yes");
@@ -206,16 +200,17 @@ public class PatientGUI extends JFrame implements ActionListener
 					currentPatient.setThroat("no");
 				}
 				
-				//System.out.println(currentPatient);
-				
+				//Instantiating an object of DataAlgorithm, passing the users symptoms
 				DataAlgorithm myDataAlgorithm = new DataAlgorithm(currentPatient);
 				myDataAlgorithm.gettingTotals();
 				myDataAlgorithm.calculations();
+				//Displaying the result of the algorithm
 				results = myDataAlgorithm.returnResults();
 				JOptionPane.showMessageDialog(this, results);
 			}
 			
 		}
+		//If the menuButton is pressed, the user is returned to the main menu
 		else if(anything.getSource() == menuButton)
 		{
 			this.dispose();

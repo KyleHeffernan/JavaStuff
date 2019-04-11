@@ -8,16 +8,17 @@
 
 package com.assignment.test;
 
+
 public class Patient
 {
-	//attributes
+	//Attributes
 	private String temperature;
 	private String aches;
 	private String throat;
 	private String tonsillitis;
 	
 	
-	//constructor
+	//Constructor
 	public Patient(String temperature, String aches, String throat, String tonsillitis)
 	{
 		this.setTemperature(temperature);

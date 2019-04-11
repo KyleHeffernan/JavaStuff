@@ -15,15 +15,6 @@ public class Control
 	public static void main(String[] args) 
 	{
 		MenuGUI myMenuGUI = new MenuGUI();
-
-		/* 
-		*** Random testing ***
-		System.out.print(patientList);
-		
-		System.out.println("\n" + myDataAlgorithm.throatTS);
-		System.out.println("\n" + myDataAlgorithm.throatNoTS);
-		*/
-		
 	}
 
 }
