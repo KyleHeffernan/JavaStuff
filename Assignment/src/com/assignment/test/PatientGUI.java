@@ -51,8 +51,8 @@ public class PatientGUI extends JFrame implements ActionListener
 	private JRadioButton throatYes;
 	private JRadioButton throatNo;
 	
-	Patient currentPatient;
-	String results;
+	private Patient currentPatient;
+	private String results;
 	
 	
 	

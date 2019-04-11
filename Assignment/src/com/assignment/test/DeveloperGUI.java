@@ -26,7 +26,10 @@ public class DeveloperGUI extends JFrame implements ActionListener
 {
 	//attributes
 	private JPanel menuPanel;
+	private JPanel testPanel;
 	private JButton menuButton;
+	private JButton testButton;
+	private String accuracy;
 	
 	//constructor
 	public DeveloperGUI()
@@ -42,14 +45,24 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		menuPanel.setPreferredSize(new Dimension(300,50));
 		add(menuPanel);
 		
+		//creating testPanel
+		testPanel = new JPanel();
+		testPanel.setPreferredSize(new Dimension(300,50));
+		add(testPanel);
+		
 		
 		//creating menuButton
 		menuButton = new JButton("Main menu");
 		menuButton.addActionListener(this);
 		menuPanel.add(menuButton);
 		
+		//creating testButton
+		testButton = new JButton("Test accuracy");
+		testButton.addActionListener(this);
+		testPanel.add(testButton);
+		
 		//setting the layout and size of the frame
-		setLayout(new GridLayout(1, 1));
+		setLayout(new GridLayout(1, 2));
 		setSize(500,500);
 		setVisible(true);	
 	}
@@ -60,6 +73,13 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		{
 			this.dispose();
 			MenuGUI myMenuGUI = new MenuGUI();
+		}
+		else if(anything.getSource() == testButton)
+		{
+			DataAlgorithm myDataAlgorithm = new DataAlgorithm();
+			accuracy = myDataAlgorithm.testData();
+			JOptionPane.showMessageDialog(this, accuracy);
+			
 		}
 		
 	}

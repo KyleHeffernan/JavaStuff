@@ -1,5 +1,5 @@
 /***********************************************
- * DataAlgorithm:this class gets an arraylist of Patient classes from the FileProcessor class and
+ * DataAlgorithm:this class gets an ArrayList of Patient classes from the FileProcessor class and
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
@@ -40,7 +40,16 @@ public class DataAlgorithm
 	
 	private String results;
 	
-	//constructor
+	private String accuracy;
+	private long newSize;
+	private ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
+	private ArrayList<Patient> testPatientList = new ArrayList<Patient>();
+	
+	
+	
+	//   *** CONSTRUCTORS ***
+	
+	//constructor used for giving the probability to a single patient
 	public DataAlgorithm(Patient currentPatient)
 	{
 		//instantiating an object of FileProcessor, with the filename data.txt
@@ -54,7 +63,37 @@ public class DataAlgorithm
 		currentTemp = currentPatient.getTemperature();
 		currentAches = currentPatient.getAches();
 		currentThroat = currentPatient.getThroat();
+	}
+	
+	//constructor used for testing the accuracy of the algorithm
+	public DataAlgorithm()
+	{
+		//instantiating an object of FileProcessor, with the filename data.txt
+		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
+		fp.openFile();
+		patientList = fp.readFile();
+		fp.closeReadFile();
 		
+		newSize = Math.round((patientList.size() * .7));
+		
+		//puts first 70% of patients into a temporary list
+		for(i=0; i < newSize; i++)
+		{
+			tempPatientList.add(patientList.get(i));
+		}
+		
+		//puts last 30% of patients into a testPatientList, to be used to tested
+		for(i = (int) newSize; i < patientList.size(); i++)
+		{
+			testPatientList.add(patientList.get(i));
+		}
+		
+		//clears patientList and returns the patients from the temporary list. patientList is now only 70% of its original size
+		patientList.clear();
+		for(i = 0; i < newSize; i++)
+		{
+			patientList.add(tempPatientList.get(i));
+		}
 	}
 	
 	
@@ -131,6 +170,14 @@ public class DataAlgorithm
 		//System.out.println("\nChance of no tonsillitis: " + Math.round(100 * noChance));
 		results = ("\nChance of tonsillitis: " + Math.round(100 * yesChance) + "%" + "\nChance of no tonsillitis: " + Math.round(100 * noChance) + "%");
 		return results;
+	}
+	
+	
+	public String testData()
+	{
+		
+		accuracy = ("The algorithm is " + "" + "% accurate");
+		return accuracy;
 	}
 	
 	
