@@ -15,7 +15,6 @@ public class DataAlgorithm
 {
 	//attributes
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
-	private int i;
 	private float totalPatients = 0;
 	private float totalTS = 0;           
 	private float totalNoTS = 0;       
@@ -44,6 +43,11 @@ public class DataAlgorithm
 	private long newSize;
 	private ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
 	private ArrayList<Patient> testPatientList = new ArrayList<Patient>();
+	int correct = 0;
+	int wrong = 0;
+	float totalPredictions;
+	float percentAccurate;
+	String predictionTS;
 	
 	
 	
@@ -76,34 +80,34 @@ public class DataAlgorithm
 		
 		newSize = Math.round((patientList.size() * .7));
 		
-		//puts first 70% of patients into a temporary list
-		for(i=0; i < newSize; i++)
-		{
-			tempPatientList.add(patientList.get(i));
-		}
-		
+
 		//puts last 30% of patients into a testPatientList, to be used to tested
-		for(i = (int) newSize; i < patientList.size(); i++)
+		for(int i = (patientList.size() - 1); i > (newSize - 1); i--)
 		{
 			testPatientList.add(patientList.get(i));
+			patientList.remove(i);
 		}
 		
-		//clears patientList and returns the patients from the temporary list. patientList is now only 70% of its original size
-		patientList.clear();
-		for(i = 0; i < newSize; i++)
-		{
-			patientList.add(tempPatientList.get(i));
-		}
 	}
 	
 	
 	public void gettingTotals()
 	{
+		//resetting variables
+		totalTS = 0;
+		totalNoTS = 0;
+		tempTS = 0;
+		tempNoTS = 0;
+		achesTS = 0;
+		achesNoTS = 0;
+		throatTS = 0;
+		throatNoTS = 0;
+		
 		//putting the total amount of patients into an attribute
 		totalPatients = patientList.size();
 		
 		//for loop which gets the total amount of patients that do and do not have tonsillitis
-		for(i = 0; i < totalPatients; i++)
+		for(int i = 0; i < totalPatients; i++)
 		{
 			if(patientList.get(i).getTonsillitis().equals("yes"))
 			{
@@ -116,7 +120,7 @@ public class DataAlgorithm
 		}
 		
 		//for loop in which there are if statements getting how many times certain symptoms lead to tonsillitis
-		for(i = 0; i < totalPatients; i++)
+		for(int i = 0; i < totalPatients; i++)
 		{
 			//if else which gets the amount of times that the current temperature lead to tonsillitis, or lead to no tonsillitis
 			if(patientList.get(i).getTemperature().equals(currentTemp) && patientList.get(i).getTonsillitis().equals("yes"))
@@ -154,6 +158,13 @@ public class DataAlgorithm
 	
 	public void calculations()
 	{
+		//resetting variables
+		totalYes = 0;
+		totalNo = 0;
+		divNum = 0;
+		yesChance = 0;
+		noChance = 0;
+		
 		totalYes = (tempTS/totalTS) * (achesTS/totalTS) * (throatTS/totalTS) * (totalTS/totalPatients);
 		totalNo = (tempNoTS/totalNoTS) * (achesNoTS/totalNoTS) * (throatNoTS/totalNoTS) * (totalNoTS/totalPatients);
 		
@@ -166,8 +177,6 @@ public class DataAlgorithm
 	
 	public String returnResults()
 	{
-		//System.out.println("\nChance of tonsillitis: " + Math.round(100 * yesChance));
-		//System.out.println("\nChance of no tonsillitis: " + Math.round(100 * noChance));
 		results = ("\nChance of tonsillitis: " + Math.round(100 * yesChance) + "%" + "\nChance of no tonsillitis: " + Math.round(100 * noChance) + "%");
 		return results;
 	}
@@ -175,8 +184,44 @@ public class DataAlgorithm
 	
 	public String testData()
 	{
+		int testSize = testPatientList.size();
+		for(int j = 0; j < testSize; j++)
+		{
+			currentTemp = testPatientList.get(j).getTemperature();
+			currentAches = testPatientList.get(j).getAches();
+			currentThroat = testPatientList.get(j).getThroat();
+			
+			gettingTotals();
+			calculations();
+			
+			System.out.println(yesChance);
+			
+			System.out.println(testPatientList.get(j).getTonsillitis());
+			if((yesChance * 100) > 50)
+			{
+				predictionTS = "yes";
+			}
+			else if((yesChance * 100) <= 50)
+			{
+				predictionTS = "no";
+			}
+			
+			if(predictionTS.equals(testPatientList.get(j).getTonsillitis()))
+			{
+				correct++;
+				System.out.println("correct");
+			}
+			else
+			{
+				wrong++;
+				System.out.println("wrong");
+			}
+			
+		}
+		totalPredictions = correct + wrong;
+		percentAccurate = (correct/totalPredictions) * 100;
 		
-		accuracy = ("The algorithm is " + "" + "% accurate");
+		accuracy = ("Correct predictions: " +correct + "\nIncorrect predictions: " +wrong + "\nPercentage accurate: "+Math.round(percentAccurate) +"%");
 		return accuracy;
 	}
 	
