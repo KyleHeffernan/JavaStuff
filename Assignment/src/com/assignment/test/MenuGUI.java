@@ -8,13 +8,13 @@
 
 package com.assignment.test;
 
+import java.awt.FlowLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -22,8 +22,9 @@ import javax.swing.JPanel;
 public class MenuGUI extends JFrame implements ActionListener
 {
 	//Attributes
-	private JPanel patientPanel;
-	private JPanel developerPanel;
+	private JPanel titlePanel;
+	private JPanel buttonPanel;
+	private JLabel titleLabel;
 	private JButton patientButton;
 	private JButton developerButton;
 	
@@ -33,35 +34,37 @@ public class MenuGUI extends JFrame implements ActionListener
 		//Setting title
 		super("Main menu");
 		
-		//Setting type of layout
-		setLayout(new GridLayout());
 		
-		//Creating patientPanel
-		patientPanel = new JPanel();
-		patientPanel.setPreferredSize(new Dimension(300,50));
-		add(patientPanel);
-				
-		//Creating developerPanel
-		developerPanel = new JPanel();
-		developerPanel.setPreferredSize(new Dimension(300,50));
-		add(developerPanel);
-
+		//Creating titlePanel
+		titlePanel = new JPanel();
+		titlePanel.setPreferredSize(new Dimension(450,50));
+		add(titlePanel);
+		
+		//Creating buttonPanel
+		buttonPanel = new JPanel();
+		add(buttonPanel);
+		
+		
+		//Creating titleLabel
+		titleLabel = new JLabel("Tonsillitis Checker");
+		titlePanel.add(titleLabel);
+		
 		
 		//Creating patientButton
-		patientButton = new JButton("Add a Patient");
+		patientButton = new JButton("Test a Patient");
 		patientButton.addActionListener(this);
-		patientPanel.add(patientButton);
+		buttonPanel.add(patientButton);
 		
 		//Creating developerButton
 		developerButton = new JButton("Developer options");
 		developerButton.addActionListener(this);
-		developerPanel.add(developerButton);
+		buttonPanel.add(developerButton);
+		
 		
 		//Setting the layout and size of the frame
-		setLayout(new GridLayout(1, 2));
+		setLayout(new FlowLayout(FlowLayout.CENTER));
 		setSize(500,500);
 		setVisible(true);
-		
 		setLocation(200, 200);
 	}
 

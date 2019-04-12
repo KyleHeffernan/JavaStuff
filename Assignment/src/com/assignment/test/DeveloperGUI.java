@@ -9,6 +9,7 @@
 package com.assignment.test;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,14 +43,11 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		//Setting title
 		super("Developer options");
 		
-		//Setting type of layout
-		setLayout(new GridLayout());
 		
 		//Creating menuPanel
 		menuPanel = new JPanel();
-		menuPanel.setPreferredSize(new Dimension(300,50));
+		menuPanel.setPreferredSize(new Dimension(300,65));
 		add(menuPanel);
-		
 		
 		//Creating displayPanel
 		displayPanel = new JPanel();
@@ -75,13 +73,13 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		
 		//creating showAll (text area)
 		showAll = new JTextArea("All patients:");
-		scroll = new JScrollPane(showAll, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll = new JScrollPane(showAll, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setPreferredSize(new Dimension(440,290));
 		displayPanel.add(scroll);
 		displayPanel.setVisible(false);
 		
 		//Setting the layout and size of the frame
-		setLayout(new GridLayout(2, 1));
+		setLayout(new FlowLayout(FlowLayout.CENTER));
 		setSize(500,500);
 		setVisible(true);
 		setLocation(200, 200);
@@ -111,10 +109,10 @@ public class DeveloperGUI extends JFrame implements ActionListener
 			displayList = fp.readFile();
 			fp.closeReadFile();
 			
-			displayString = ("All people: ");
+			displayString = ("All patients: \n");
 			for(int i = 0; i < displayList.size(); i++)
 			{
-				displayString = displayString + displayList.get(i) + "\n";
+				displayString = displayString + (i + 1) + ":"+ displayList.get(i) + "\n";
 			}
 			showAll.setText(displayString);
 			displayPanel.setVisible(true);

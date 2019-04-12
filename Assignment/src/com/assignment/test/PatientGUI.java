@@ -56,9 +56,6 @@ public class PatientGUI extends JFrame implements ActionListener
 		//Setting title
 		super("Enter Patient's symptoms");
 		
-		//Setting type of layout
-		setLayout(new GridLayout());
-				
 		
 		//Creating titlePanel
 		titlePanel = new JPanel();
@@ -134,15 +131,15 @@ public class PatientGUI extends JFrame implements ActionListener
 		inputPanel3.add(throatNo);
 		
 		
-		//Creating submitButton
-		submitButton = new JButton("Submit");
-		submitButton.addActionListener(this);
-		bottomPanel.add(submitButton);
-		
 		//Creating menuButton
 		menuButton = new JButton("Main menu");
 		menuButton.addActionListener(this);
 		bottomPanel.add(menuButton);
+				
+		//Creating submitButton
+		submitButton = new JButton("Submit");
+		submitButton.addActionListener(this);
+		bottomPanel.add(submitButton);
 				
 		
 		//Setting the layout and size of the frame
