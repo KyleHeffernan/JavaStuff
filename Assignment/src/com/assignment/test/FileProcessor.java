@@ -1,9 +1,10 @@
 /***********************************************
- * FileProcessor: This class reads through a file line by line, and adds each line to a new Patient in patientList
+ * FileProcessor: This class reads through a file line by line, and adds each line to a new Patient in patientList, returning patientList
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 01/04/19
  ***********************************************/
+
 
 package com.assignment.test;
 

@@ -1,5 +1,5 @@
 /***********************************************
- * MenuGUI: This is the GUI that lets the user select what they want to do
+ * MenuGUI: This is the GUI that lets the user is initially greeted with, allowing them to test a patient or enter dev options
  * Java Assignment
  * Author: Kyle Heffernan
  * Date: 09/04/19

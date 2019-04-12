@@ -19,11 +19,11 @@ public class DataAlgorithm
 	private int wrong = 0;
 	private long newSize;
 	private float totalPatients = 0;
-	private float totalTS = 0;           
-	private float totalNoTS = 0;       
-	private float tempTS;                
-	private float tempNoTS;              
-	private float achesTS;               
+	private float totalTS = 0;
+	private float totalNoTS = 0;
+	private float tempTS;
+	private float tempNoTS;
+	private float achesTS;          
 	private float achesNoTS;
 	private float throatTS;
 	private float throatNoTS;
@@ -42,13 +42,13 @@ public class DataAlgorithm
 	private String accuracy;
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	private ArrayList<Patient> testPatientList = new ArrayList<Patient>();
-	Patient currentPatient;
+	private Patient currentPatient;
 	
 	
 	//   *** CONSTRUCTORS ***
 	
 	//Constructor used for a single patient
-	public DataAlgorithm(Patient currentPatient)
+	public DataAlgorithm(Patient userPatient)
 	{
 		//Instantiating an object of FileProcessor, with the filename data.csv
 		FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
@@ -57,7 +57,7 @@ public class DataAlgorithm
 		fp.closeReadFile();
 		
 		//Setting the current patients symptoms to test
-		this.currentPatient = currentPatient;
+		this.currentPatient = userPatient;
 		currentTemp = currentPatient.getTemperature();
 		currentAches = currentPatient.getAches();
 		currentThroat = currentPatient.getThroat();
@@ -223,33 +223,30 @@ public class DataAlgorithm
 	}
 	
 	
-	/*
-	 *** Explanation of Algorithm ***
-	 
-	 For an individual patient multiply the probability of each of the 3 symptoms
-	 leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis = x
-	 
-	 Then  multiply the probability of each of the 3 symptoms
-	 not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis = y
-	 
-	 Add them together to get z, then divide x by z to get chance of tonsillitis, and y by z to get chance of no tonsillitis
-	 
-	 
-	 Example: patient has temperature hot, aches yes, sore throat yes
-	 Example data: 18 patients
-	 9 with tonsillitis (TS)
-	 9 without TS
-	 
-	 temperature hot: 1/9 TS, 4/9 no TS
-	 aches yes: 4/9 TS, 7/9 no TS
-	 sore throat yes: 7/9 TS, 3/9 no TS
-	 
-	 Yes: (1/9) * (4/9) * (7/9) * (9/18) = 0.01920438957
-	 No: (4/9) * (7/9) * (3/9) * (9/18) = 0.05761316872
-	 
-	 0.01920438957 + 0.05761316872 = 0.07681755829
-	 
-	 0.01920438957 / 0.07681755829  = 0.25 (*100) = 25% Probability of patient having tonsillitis
-	 0.05761316872 / 0.07681755829  = 0.75 (*100) = 75% Probability of patient not having tonsillitis
-	 */
+	/****** Explanation of Algorithm ******
+	* 
+	* For an individual patient multiply the probability of each of the 3 symptoms
+	* leading to tonsillitis by each other and then multiply it by the overall chance of tonsillitis = x
+	* 
+	* Then  multiply the probability of each of the 3 symptoms
+	* not leading to tonsillitis by each other and then multiply it by the overall chance of not having tonsillitis = y
+	* Add them together to get z, then divide x by z to get chance of tonsillitis, and y by z to get chance of no tonsillitis
+	* 
+	* Example: patient has temperature hot, aches yes, sore throat yes
+	* Example data: 18 patients
+	* 9 with tonsillitis (TS)
+	* 9 without TS
+	*
+	* temperature hot: 1/9 TS, 4/9 no TS
+	* aches yes: 4/9 TS, 7/9 no TS
+	* sore throat yes: 7/9 TS, 3/9 no TS
+	* 
+	* Yes: (1/9) * (4/9) * (7/9) * (9/18) = 0.01920438957
+	* No: (4/9) * (7/9) * (3/9) * (9/18) = 0.05761316872
+	* 
+	* 0.01920438957 + 0.05761316872 = 0.07681755829
+	* 
+	* 0.01920438957 / 0.07681755829  = 0.25 (*100) = 25% Probability of patient having tonsillitis
+	* 0.05761316872 / 0.07681755829  = 0.75 (*100) = 75% Probability of patient not having tonsillitis
+	******************************************/
 }

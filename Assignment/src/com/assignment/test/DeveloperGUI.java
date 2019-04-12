@@ -10,7 +10,6 @@ package com.assignment.test;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -71,8 +70,9 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		menuPanel.add(showButton);
 		
 		
-		//creating showAll (text area)
+		//Creating showAll (text area)
 		showAll = new JTextArea("All patients:");
+		//Adding a scroll bar to the text area as there is a lot of text in it
 		scroll = new JScrollPane(showAll, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setPreferredSize(new Dimension(440,290));
 		displayPanel.add(scroll);
@@ -93,14 +93,16 @@ public class DeveloperGUI extends JFrame implements ActionListener
 			this.dispose();
 			MenuGUI myMenuGUI = new MenuGUI();
 		}
-		//if the testButton is pressed, testData() is called and the algorithm is tested
+		
+		//If the testButton is pressed, testData() is called and the algorithm is tested
 		else if(anything.getSource() == testButton)
 		{
 			DataAlgorithm myDataAlgorithm = new DataAlgorithm();
 			accuracy = myDataAlgorithm.testData();
 			JOptionPane.showMessageDialog(this, accuracy);
 		}
-		//If the showButton is pressed,
+		
+		//If the showButton is pressed, all of the contents of displayList are displayed in a textArea
 		else if(anything.getSource() == showButton)
 		{
 			//Instantiating an object of FileProcessor, with the filename data.csv
@@ -109,6 +111,7 @@ public class DeveloperGUI extends JFrame implements ActionListener
 			displayList = fp.readFile();
 			fp.closeReadFile();
 			
+			//Loops through each element of displayList, adding Patient to a string with is displayed in the textArea
 			displayString = ("All patients: \n");
 			for(int i = 0; i < displayList.size(); i++)
 			{

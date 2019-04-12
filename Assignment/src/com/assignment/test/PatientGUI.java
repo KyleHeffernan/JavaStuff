@@ -161,6 +161,7 @@ public class PatientGUI extends JFrame implements ActionListener
 			}
 			else
 			{
+				//Making a Patient with default values, which are then replaced by user input
 				currentPatient = new Patient("Not set", "Not set", "Not set", "Not set");
 				
 				//Setting the patients temperature based on what is submitted
