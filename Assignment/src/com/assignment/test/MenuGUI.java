@@ -60,7 +60,9 @@ public class MenuGUI extends JFrame implements ActionListener
 		//Setting the layout and size of the frame
 		setLayout(new GridLayout(1, 2));
 		setSize(500,500);
-		setVisible(true);		
+		setVisible(true);
+		
+		setLocation(200, 200);
 	}
 
 	

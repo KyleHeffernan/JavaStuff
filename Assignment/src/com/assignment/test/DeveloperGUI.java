@@ -12,24 +12,29 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 public class DeveloperGUI extends JFrame implements ActionListener
 {
 	//Attributes
 	private JPanel menuPanel;
-	private JPanel testPanel;
+	private JPanel displayPanel;
 	private JButton menuButton;
 	private JButton testButton;
+	private JButton showButton;
+	private JTextArea showAll;
+	private JScrollPane scroll;
 	private String accuracy;
+	private String displayString;
+	private ArrayList<Patient> displayList = new ArrayList<Patient>();
 	
 	//Constructor
 	public DeveloperGUI()
@@ -45,10 +50,11 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		menuPanel.setPreferredSize(new Dimension(300,50));
 		add(menuPanel);
 		
-		//Creating testPanel
-		testPanel = new JPanel();
-		testPanel.setPreferredSize(new Dimension(300,50));
-		add(testPanel);
+		
+		//Creating displayPanel
+		displayPanel = new JPanel();
+		displayPanel.setPreferredSize(new Dimension(450,300));
+		add(displayPanel);
 		
 		
 		//Creating menuButton
@@ -59,12 +65,26 @@ public class DeveloperGUI extends JFrame implements ActionListener
 		//Creating testButton
 		testButton = new JButton("Test accuracy");
 		testButton.addActionListener(this);
-		testPanel.add(testButton);
+		menuPanel.add(testButton);
+		
+		//Creating showButton
+		showButton = new JButton("Display test data");
+		showButton.addActionListener(this);
+		menuPanel.add(showButton);
+		
+		
+		//creating showAll (text area)
+		showAll = new JTextArea("All patients:");
+		scroll = new JScrollPane(showAll, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll.setPreferredSize(new Dimension(440,290));
+		displayPanel.add(scroll);
+		displayPanel.setVisible(false);
 		
 		//Setting the layout and size of the frame
-		setLayout(new GridLayout(1, 2));
+		setLayout(new GridLayout(2, 1));
 		setSize(500,500);
-		setVisible(true);	
+		setVisible(true);
+		setLocation(200, 200);
 	}
 	
 	public void actionPerformed(ActionEvent anything)
@@ -82,7 +102,23 @@ public class DeveloperGUI extends JFrame implements ActionListener
 			accuracy = myDataAlgorithm.testData();
 			JOptionPane.showMessageDialog(this, accuracy);
 		}
-		
+		//If the showButton is pressed,
+		else if(anything.getSource() == showButton)
+		{
+			//Instantiating an object of FileProcessor, with the filename data.csv
+			FileProcessor fp = new FileProcessor("src\\com\\assignment\\test\\data.csv");
+			fp.openFile();
+			displayList = fp.readFile();
+			fp.closeReadFile();
+			
+			displayString = ("All people: ");
+			for(int i = 0; i < displayList.size(); i++)
+			{
+				displayString = displayString + displayList.get(i) + "\n";
+			}
+			showAll.setText(displayString);
+			displayPanel.setVisible(true);
+		}
 	}
 
 }

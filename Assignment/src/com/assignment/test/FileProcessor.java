@@ -9,7 +9,6 @@ package com.assignment.test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,7 +19,6 @@ public class FileProcessor
 	private String fileName;
 	private Scanner fileScanner;
 	private File text;
-	private PrintWriter writing;
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
 	//Constructor
@@ -59,34 +57,10 @@ public class FileProcessor
 	}
 	
 	
-	public void fileWriting()
-	{
-		try
-		{
-			setWriting(new PrintWriter(getText()));
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("Run time error: " + e.getMessage());
-			
-		}
-	}
-	
-	public void writeLine(String line)
-	{
-		getWriting().println(line);
-	}
-	
 	//Closes file
 	public void closeReadFile()
 	{
 		getFileScanner().close();
-	}
-	
-	//Closes file
-	public void closeWriteFile()
-	{
-		getWriting().close();
 	}
 
 	
@@ -113,14 +87,6 @@ public class FileProcessor
 
 	public void setText(File text) {
 		this.text = text;
-	}
-
-	public PrintWriter getWriting() {
-		return writing;
-	}
-
-	public void setWriting(PrintWriter writing) {
-		this.writing = writing;
 	}
 	
 	

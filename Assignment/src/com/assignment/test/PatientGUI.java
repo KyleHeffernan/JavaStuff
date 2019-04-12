@@ -149,7 +149,7 @@ public class PatientGUI extends JFrame implements ActionListener
 		setLayout(new GridLayout(5, 1));
 		setSize(500,500);
 		setVisible(true);
-		
+		setLocation(200, 200);
 	}
 	
 	
