@@ -28,3 +28,11 @@ check the accuracy of the algorithm by getting it to evaluate itself using some 
 The user is initially greeted with a main menu. They can click 'Test a Patient' to enter the symptoms of a patient
 and get the probability of them having tonsillitis. They can also click 'Developer options' to either test the
 accuracy of the algorithm, or display the test data in a text area.
+
+*** Youtube Video ***
+https://www.youtube.com/watch?v=_kIM8i6gpz4&feature=youtu.be
+
+*** GitHub Link ***
+https://github.com/KyleHeffernan/JavaStuff
+
+
